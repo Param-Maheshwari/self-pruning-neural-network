@@ -1,5 +1,4 @@
 # 🧠 Self-Pruning Neural Network
-
 A PyTorch implementation of a neural network that **learns to prune 
 itself during training** using learnable gate parameters and L1 
 sparsity regularization — trained on the CIFAR-10 dataset.
@@ -10,7 +9,6 @@ Case Study**.
 ---
 
 ## 📌 What is This?
-
 Most neural networks are pruned **after** training. This project takes 
 a different approach — the network **prunes itself during training** by 
 learning which weights are unnecessary.
@@ -26,11 +24,13 @@ toward zero, forcing the network to become sparse automatically.
 
 ## 🗂️ Project Structure
 
+```
 self-pruning-neural-network/
 ├── solution.ipynb          # Full implementation in Colab notebook
 ├── report.md               # Analysis report with results table
 ├── gate_distribution.png   # Plot of final gate value distribution
 └── README.md               # You are here
+```
 
 ---
 
@@ -49,11 +49,18 @@ output = F.linear(x, pruned_weights, self.bias)
 ```
 
 ### 2. Custom Loss Function
+
+```
 Total Loss = CrossEntropyLoss + λ × SparsityLoss
+```
+
 Where `SparsityLoss` = sum of all gate values across all layers (L1 norm)
 
 ### 3. Network Architecture
+
+```
 Input (3072) → FC1 (512) → FC2 (256) → FC3 (128) → Output (10)
+```
 
 All fully connected layers use `PrunableLinear`.
 
@@ -61,8 +68,8 @@ All fully connected layers use `PrunableLinear`.
 
 ## 📊 Results
 
-> Sparsity is measured as % of weights with gate value < 0.5
-> (gates below 0.5 contribute less than half their original weight)
+> Sparsity is measured as % of weights with gate value below threshold.
+> Higher λ = more aggressive pruning = gates pushed closer to zero.
 
 | Lambda (λ) | Test Accuracy | Sparsity (gate < 0.5) | Sparsity (gate < 0.3) |
 |------------|--------------|----------------------|----------------------|
@@ -90,6 +97,7 @@ All fully connected layers use `PrunableLinear`.
 3. Run all cells in order
 
 ### Option 2: Local Setup
+
 ```bash
 # Clone the repo
 git clone https://github.com/Param-Maheshwari/self-pruning-neural-network.git
@@ -105,10 +113,13 @@ jupyter notebook solution.ipynb
 ---
 
 ## 📦 Dependencies
+
+```
 torch
 torchvision
 matplotlib
 numpy
+```
 
 ---
 
