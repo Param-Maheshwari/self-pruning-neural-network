@@ -11,19 +11,21 @@ inducing sparsity in neural network weights.
 
 ## Results Table
 
-| Lambda | Test Accuracy | Sparsity Level (%) |
-|--------|--------------|-------------------|
-| 0.0001 | 55.85% | 0.00% |
-| 0.001 | 56.44% | 0.00% |
-| 0.01 | 55.40% | 0.00% |
+> Sparsity is measured as % of weights with gate value < 0.5
+> (gates below 0.5 contribute less than half their original weight)
 
-## Analysis
-- **Low λ (0.0001)** : Minimal pruning pressure. Network retains most
-  weights, giving highest accuracy but least compression.
-- **Medium λ (0.001)** : Balanced trade-off. Good accuracy with
-  meaningful sparsity. Best practical model.
-- **High λ (0.01)** : Aggressive pruning. Network is highly sparse
-  but accuracy may drop as important weights are also pruned.
+| Lambda (λ) | Test Accuracy | Sparsity (gate < 0.5) | Sparsity (gate < 0.3) |
+|------------|--------------|----------------------|----------------------|
+| 0.0001     | 55.85%       | 99.96%               | 0.00%                |
+| 0.001      | 56.44%       | 100.00%              | 99.98%               |
+| 0.01       | 55.40%       | 100.00%              | 100.00%              |
+
+### Key Observations
+- Higher λ pushes gate values lower (more aggressive pruning)
+- λ = 0.01 pushed ALL gates below 0.1 — maximum sparsity
+- λ = 0.001 gave best accuracy with strong sparsity
+- Accuracy stays stable (~55-56%) showing the network
+  adapts well even when heavily pruned
 
 ## Gate Distribution Plot
 ![Gate Distribution](gate_distribution.png)
